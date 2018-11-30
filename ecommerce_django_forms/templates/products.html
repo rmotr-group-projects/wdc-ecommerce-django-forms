@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <p class="lead">Featured products <i style="color: orange;" title='Edit' class="fas fa-star"></i></p>
+  <div class="row">
+
+    {% if featured_products %}
+      {% for featured_product in featured_products %}
+      <div class="col" style="">
+        <div class="card mx-auto" style="height: 100%; width: 15rem;">
+          {% if featured_product.productimage_set.all %}
+          <div class="product-image-container">
+            <img class="card-img-top product-image" src="{{featured_product.productimage_set.first.url}}" alt="Card image cap">
+          </div>
+          {% else %}
+          <div class="product-image-container">
+            <img class="card-img-top product-image" src="https://via.placeholder.com/150x150" alt="Card image cap">
+          </div>
+          {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title text-truncate" title="{{featured_product.name}}">{{featured_product.name}}</h5>
+            <p class="card-text">${{featured_product.price}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="col">
+        <p class="text-center font-italic">No products marked as featured yet.</p>
+      </div>
+    {% endif %}
+
+  </div>
+
+  <br>
+  <br>
+  {% if request.user.is_authenticated %}
+    {% if request.user.is_staff %}
+      <a style="margin: 10px 2px;" class="btn btn-outline-primary float-right" href="/create-product" role="button">Create product</a>
+    {% endif %}
+    <a style="margin: 10px 2px;" class="btn btn-outline-success float-right" href="/cart" role="button">Shopping Cart ({{request.session.products_in_cart|length}})</a>
+  {% endif %}
+
+  <p class="lead">List of all available products</p>
+  <table class="table table-striped">
+    <thead>
+      <tr style="text-align: center;">
+        <th>#</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        {% if request.user.is_authenticated %}
+          {% if request.user.is_staff %}
+            <th>Featured</th>
+          {% endif %}
+          <th>Actions</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr style="text-align: center;">
+        <td>{{ forloop.counter }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.category.name }}</td>
+        <td>${{ product.price }}</td>
+        {% if request.user.is_authenticated and request.user.is_staff %}
+          <td>
+            {% if product.featured %}
+              <a href="/toggle-featured/{{product.id}}"><i style="color: orange;" title='Edit' class="fas fa-star"></i></a>
+            {% else %}
+              <a href="/toggle-featured/{{product.id}}"><i title='Edit' class="far fa-star"></i></a>
+            {% endif %}
+          </td>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+          <td>
+            <div class="row justify-content-md-center">
+              {% if product.id|slugify not in request.session.products_in_cart %}
+                <form action="{% url 'add_to_cart' %}" method='post' class='inline'>
+                  {% csrf_token %}
+                  <button class="btn btn-success btn-xs fas fa-shopping-cart" type="submit" name="add_to_cart" title="Add to cart"></button>
+                  <input type="hidden" name="product_id" value="{{product.id}}">
+                </form>
+              {% else %}
+                <button class="btn btn-success btn-xs fas fa-shopping-cart disabled" title="Add to cart"></button>
+              {% endif %}
+              {% if request.user.is_staff %}
+                <a href="/edit-product/{{product.id}}"><button class="btn btn-info btn-xs fas fa-edit" title="Edit"></button></a>
+                <a href="/delete-product/{{product.id}}"><button class="btn btn-danger btn-xs fas fa-trash" href="/delete-product/{{product.id}}" title="Delete"></button></a>
+              {% endif %}
+            </div>
+          </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

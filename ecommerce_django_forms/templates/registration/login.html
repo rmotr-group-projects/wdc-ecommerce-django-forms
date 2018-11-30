@@ -1,0 +1,51 @@
+{% load bootstrap4 %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://rmotr.com/static/favicons/apple-icon-60x60.c69b596ccabe.png">
+    <title>Coinmarketcap clone</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <style media="screen">
+      .container {
+        margin-top: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/products"><img src="https://rmotr.com/static/favicons/apple-icon-60x60.c69b596ccabe.png" alt="" width="32"></a>
+      <ul class="nav navbar-nav mr-auto"></ul>
+      <ul class="nav navbar-nav">
+      {% if request.user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link active" href="#"><i class="fa fa-user"></i> {{request.user.username|capfirst}}</a></li>
+        <li class="nav-item"><a class="btn btn-outline-light" href="/accounts/logout">Log out</a></li>
+      {% else %}
+        <li class="nav-item"><a class="btn btn-outline-light" href="/accounts/login">Log in</a></li>
+      {% endif %}
+      </ul>
+    </nav>
+
+    <main role="main" class="container">
+      <div class="starter-template">
+        <h1>Log in</h1>
+        <p class="lead">
+          Access your to account.
+        </p>
+        <form class="" action="" method="post">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          {% buttons %}
+              <button type="submit" class="btn btn-primary">Log in</button>
+          {% endbuttons %}
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

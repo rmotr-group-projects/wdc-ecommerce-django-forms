@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+  <form action="{% url 'edit_product' product.id %}" method='POST'>
+    <a style="margin-bottom: 10px;" class="btn btn-outline-primary float-right" href="/products" role="button">Back to products</a>
+    <p class="lead">Edit product:</p>
+    {% csrf_token %}
+    {{ product_form|crispy }}
+    <input type="submit" value="Edit" class="btn btn-primary float-right">
+  </form>
+{% endblock %}

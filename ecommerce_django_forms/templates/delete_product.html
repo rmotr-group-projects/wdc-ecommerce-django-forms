@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <form action="{% url 'delete_product' product.id %}" method='POST'>
+    {% csrf_token %}
+    <p class="lead">You are about to delete <b>"{{product.name}}"</b>, this procedure is irreversible.</p>
+    <p class="lead">Do you want to proceed?</p>
+
+    <button type="submit" class="btn btn-primary">Confirm</button>
+    <a style="margin-right: 10px;" type="button" class="btn btn-outline-primary" href="/products">Cancel</a>
+  </form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <a style="margin-bottom: 10px;" class="btn btn-outline-primary float-right" href="/products" role="button">Back to products</a>
+  <p class="lead">Shopping Cart:</p>
+  <div class="row">
+
+    {% if products_in_cart %}
+      {% for product in products_in_cart %}
+      <div class="col" style="margin-bottom: 20px;">
+        <div class="card mx-auto" style="height: 100%; width: 18rem;">
+          {% if product.productimage_set.all %}
+          <div class="product-image-container">
+            <img class="card-img-top product-image" src="{{product.productimage_set.first.url}}" alt="Card image cap">
+          </div>
+          {% else %}
+          <div class="product-image-container">
+            <img class="card-img-top product-image" src="https://via.placeholder.com/150x150" alt="Card image cap">
+          </div>
+          {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title text-truncate" title="{{product.name}}">{{product.name}}</h5>
+            <p class="card-text">${{product.price}}</p>
+            <form action="{% url 'remove_from_cart' %}" method='post' class='inline'>
+              {% csrf_token %}
+              <button class="btn btn-warning" type="submit" name="remove_from_cart" title="Remove from cart">Remove from cart</button>
+              <input type="hidden" name="product_id" value="{{product.id}}">
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="col">
+        <p class="text-center font-italic">You didn't add any products to your cart.</p>
+      </div>
+    {% endif %}
+
+  </div>
+
+{% endblock %}
