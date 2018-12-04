@@ -24,6 +24,8 @@ def products(request):
 
 def create_product(request):
     if request.method == 'GET':
+        # create an instance of ProductFrom and render "create_product.html"
+        # sending the form as context under "product_form" key
         product_form = ProductForm()
         return render(
             request,
