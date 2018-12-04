@@ -15,6 +15,8 @@ from .models import Product, Category, ProductImage
     # image_2 = forms.URLField(label='Image 2', required=False)
     # image_3 = forms.URLField(label='Image 3', required=False)
 
+    # CODE ABOVE IS JUST AN EXAMPLE OF A REGULAR DJANGO FORM.
+
 
 class ProductForm(forms.ModelForm):
     image_1 = forms.URLField(required=False)
@@ -22,14 +24,14 @@ class ProductForm(forms.ModelForm):
     image_3 = forms.URLField(required=False)
 
     class Meta:
-        model = Product
-        fields = ['name', 'sku', 'category', 'description', 'price']
+        # Complete model and fields
+        # YOUR CODE HERE
+        pass
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
         product = self.instance
-        product_images = [image.url for image in product.productimage_set.all()]
+        # Loop through all product images and assign one image URL to each
+        # image_1, image_2 and image_3 form fields
 
-        for i in range(len(product_images)):
-            field = self.fields.get('image_{}'.format(i + 1))
-            field.initial = product_images[i]
+        # YOUR CODE HERE
