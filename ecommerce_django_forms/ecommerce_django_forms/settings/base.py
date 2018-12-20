@@ -27,7 +27,7 @@ SECRET_KEY = '#*@2x@v^e5i3fg4g68_=&)i^b711mz9g@2z%6ty7z#dw^@x-g2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ecommerce-auth-rr3ddy.c9users.io']
 
 
 # Application definition
