@@ -2,12 +2,11 @@
 {% load crispy_forms_tags %}
 
 {% block main %}
-  <form action="{% url 'create_product' %}" method='post'>
+  <form action="{% url 'create_product' %}" method='POST'>
     <a style="margin-bottom: 10px;" class="btn btn-outline-primary float-right" href="/products" role="button">Back to products</a>
     <p class="lead">Create product:</p>
     {% csrf_token %}
-    <!-- Render the product_form using the |crispy filter to get fancy styles -->
-    <!-- YOUR CODE HERE -->
+    {{ product_form|crispy }}
     <input type="submit" value="Create" class="btn btn-primary float-right">
   </form>
 {% endblock %}

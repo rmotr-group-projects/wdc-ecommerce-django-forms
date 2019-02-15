@@ -19,14 +19,14 @@ from .models import Product, Category, ProductImage
 
 
 class ProductForm(forms.ModelForm):
-    image_1 = forms.URLField(required=False)
-    image_2 = forms.URLField(required=False)
-    image_3 = forms.URLField(required=False)
+    image_1 = forms.URLField(required=False, widget=forms.URLInput(attrs={'placeholder': 'optional URL to image'}))
+    image_2 = forms.URLField(required=False, widget=forms.URLInput(attrs={'placeholder': 'optional URL to image'}))
+    image_3 = forms.URLField(required=False, widget=forms.URLInput(attrs={'placeholder': 'optional URL to image'}))
+    CHOICES = ()
 
     class Meta:
-        # Complete model and fields
-        # YOUR CODE HERE
-        pass
+        model = Product
+        fields = ['name', 'sku', 'category', 'description', 'price', 'active', 'featured']
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -35,3 +35,4 @@ class ProductForm(forms.ModelForm):
         # image_1, image_2 and image_3 form fields
 
         # YOUR CODE HERE
+        pass
