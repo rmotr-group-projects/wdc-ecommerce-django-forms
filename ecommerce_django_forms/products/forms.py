@@ -26,12 +26,31 @@ class ProductForm(forms.ModelForm):
     class Meta:
         # Complete model and fields
         # YOUR CODE HERE
-        pass
+        
+        model = Product
+        fields = ['name','sku','category','description','price']
+        
+        #NOTE: fields come from product
+        # WHY DO WE NOT USE CREATIVE, ACTIVE, FEATURED?
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
         product = self.instance
         # Loop through all product images and assign one image URL to each
         # image_1, image_2 and image_3 form fields
-
+        
         # YOUR CODE HERE
+        # QUESTION: WHY WOULD THIS BE IMAGE.URL ?
+        product_images = [image.url for image in product.productimage_set.all()] 
+        # collection of product images, each product image has url attribute
+        
+        for i in range(len(product_images)):
+            field = self.fields.get('image_{}'.format(i + 1))
+            field.initial = product_images[i]
+        
+        
+        #product_images = [image_url for image in product.productimage_set.all()] # QUESTION: WHY WOULD THIS BE IMAGE.URL ?
+     
+        #debug 
+        #for x in image_url:
+         #   print(x)

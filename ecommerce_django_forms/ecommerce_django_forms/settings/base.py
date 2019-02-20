@@ -27,8 +27,8 @@ SECRET_KEY = '#*@2x@v^e5i3fg4g68_=&)i^b711mz9g@2z%6ty7z#dw^@x-g2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['i4-p39768.proxy.notebooks.ai','i4-p39747.proxy.notebooks.ai','69.255.219.8','104.129.194.85','i6-p33521.proxy.notebooks.ai','https://i6-p33521.proxy.notebooks.ai']
+######### https://stackoverflow.com/questions/40667519/why-is-django-throwing-error-disallowedhost-at
 
 # Application definition
 
