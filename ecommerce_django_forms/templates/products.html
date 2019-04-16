@@ -49,9 +49,14 @@
         <th>Category</th>
         <th>Price</th>
         <!-- Show "Featured" column only if user is staff -->
+        {% if request.user.is_staff %}
         <th>Featured</th>
+        {% endif %}
+        
+        {% if request.user.is_authenticated %}
         <!-- Show "Actions" column only if user is authenticated -->
         <th>Actions</th>
+        {% endif %}
       </tr>
     </thead>
     <tbody>
@@ -63,6 +68,7 @@
         <td>${{ product.price }}</td>
 
         <!-- Show this Featured stars buttons only if user is staff -->
+        {% if request.user.is_staff %}
         <td>
           {% if product.featured %}
             <a href="/toggle-featured/{{product.id}}"><i style="color: orange;" title='Edit' class="fas fa-star"></i></a>
@@ -70,9 +76,11 @@
             <a href="/toggle-featured/{{product.id}}"><i title='Edit' class="far fa-star"></i></a>
           {% endif %}
         </td>
+        {% endif %}
         <!--  -->
 
         <!-- Show this Action buttons only if user is authenticated -->
+        {% if request.user.is_authenticated %}
         <td>
           <div class="row justify-content-md-center">
             {% if product.id|slugify not in request.session.products_in_cart %}
@@ -85,11 +93,14 @@
               <button class="btn btn-success btn-xs fas fa-shopping-cart disabled" title="Add to cart"></button>
             {% endif %}
             <!-- Show Edit and Delete buttons only if user is staff -->
+            {% if request.user.is_staff %}
             <a href="/edit-product/{{product.id}}"><button class="btn btn-info btn-xs fas fa-edit" title="Edit"></button></a>
             <a href="/delete-product/{{product.id}}"><button class="btn btn-danger btn-xs fas fa-trash" href="/delete-product/{{product.id}}" title="Delete"></button></a>
+            {% endif %}
             <!--  -->
           </div>
         </td>
+        {% endif %}
         <!--  -->
 
       </tr>
