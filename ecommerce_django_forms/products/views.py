@@ -90,7 +90,7 @@ def edit_product(request, product_id):
 
         # Render the 'edit_product.html' template sending the product and the
         # product_form as context
-        return return render(
+        return render(
             request,
             'edit_product.html',
             context={
