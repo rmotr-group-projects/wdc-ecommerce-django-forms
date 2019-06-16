@@ -26,7 +26,9 @@ class ProductForm(forms.ModelForm):
     class Meta:
         # Complete model and fields
         # YOUR CODE HERE
-        pass
+        model = Product
+        fields = ['name', 'sku', 'category', 'description', 'price']
+
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -34,4 +36,8 @@ class ProductForm(forms.ModelForm):
         # Loop through all product images and assign one image URL to each
         # image_1, image_2 and image_3 form fields
 
-        # YOUR CODE HERE
+        product_images = [image.url for image in product.productimage_set.all()]
+
+        for i in range(len(product_images)):
+            field = self.fields.get('image_{}'.format(i + 1))
+            field.initial = product_images[i]
