@@ -41,4 +41,4 @@ class ProductForm(forms.ModelForm):
 
         for i in range(len(product_images)):
             field = self.fields.get('image_{}'.format(i + 1))
-field.initial = product_images[i]
+            field.initial = product_images[i]
