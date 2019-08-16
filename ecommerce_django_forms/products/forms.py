@@ -26,7 +26,9 @@ class ProductForm(forms.ModelForm):
     class Meta:
         # Complete model and fields
         # YOUR CODE HERE
-        pass
+        model = Product
+        fields = ['name', 'sku', 'category', 'description', 'price', 'active', 'featured']
+        
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -34,4 +36,16 @@ class ProductForm(forms.ModelForm):
         # Loop through all product images and assign one image URL to each
         # image_1, image_2 and image_3 form fields
 
+        """what is the problem I am trying to sovle here?
+        - product instance has three attributes image_n that need to have an URLField() set """
+
         # YOUR CODE HERE
+                        #ProductImage()        # classname  _set = magic?
+        product_images = [image.url for image in product.productimage_set.all()]
+        #product_images is a list of imageurls
+
+        for i in range(len(product_images)):
+                        # fields is refering to the images not the fields list int the Meta Class
+            field = self.fields.get('image_{}'.format(i + 1))
+            field.initial = product_images[i]
+            
