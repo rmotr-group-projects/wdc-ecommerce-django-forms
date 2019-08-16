@@ -8,6 +8,7 @@
     {% csrf_token %}
     <!-- Render the product_form using the |crispy filter to get fancy styles -->
     <!-- YOUR CODE HERE -->
+    {{product_form|crispy}}
     <input type="submit" value="Edit" class="btn btn-primary float-right">
   </form>
 {% endblock %}
